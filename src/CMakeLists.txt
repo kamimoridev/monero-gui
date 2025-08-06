@@ -136,6 +136,7 @@ target_link_libraries(monero-wallet-gui
     qrdecoder
     translations
     zxcvbn
+    libi2pd
 )
 
 if(X11_FOUND)
