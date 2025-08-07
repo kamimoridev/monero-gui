@@ -66,6 +66,8 @@ public:
     static QString portableFolderName();
     static bool portableConfigExists();
 
+    QString settingsDirectory() const;
+
 public slots:
     void _q_propertyChanged();
 

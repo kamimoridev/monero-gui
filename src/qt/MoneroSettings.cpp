@@ -288,3 +288,11 @@ MoneroSettings::MoneroSettings(QObject *parent) :
     QObject(parent)
 {
 }
+
+QString MoneroSettings::settingsDirectory() const {
+    if (m_settings) {
+        return QFileInfo(m_settings->fileName()).absolutePath();
+    } else {
+        return QString();
+    }
+}
