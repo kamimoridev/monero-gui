@@ -280,6 +280,16 @@ Rectangle{
                 }
             }
 
+
+            MoneroComponents.CheckBox {
+                id: i2pCheckBox
+                text: qsTr("Use I2P for node connection (node will restart automatically if you click)") + translationManager.emptyString
+                checked: persistentSettings.i2pNodeConnectionEnabled
+                onClicked: {
+                    persistentSettings.i2pNodeConnectionEnabled = !persistentSettings.i2pNodeConnectionEnabled
+                }
+            }
+
             RowLayout {
                 MoneroComponents.LineEditMulti {
                     id: blockchainFolder
@@ -355,4 +365,3 @@ Rectangle{
         }
     }
 }
-

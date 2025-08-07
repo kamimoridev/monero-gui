@@ -296,3 +296,22 @@ QString MoneroSettings::settingsDirectory() const {
         return QString();
     }
 }
+
+bool MoneroSettings::i2pNodeConnectionEnabled() const
+{
+    if (!m_settings) {
+        return false;
+    }
+    return m_settings->value("i2pNodeConnectionEnabled", false).toBool();
+}
+
+void MoneroSettings::setI2pNodeConnectionEnabled(bool enabled)
+{
+    if (!m_settings) {
+        return;
+    }
+    if (i2pNodeConnectionEnabled() != enabled) {
+        m_settings->setValue("i2pNodeConnectionEnabled", enabled);
+        emit i2pNodeConnectionEnabledChanged();
+    }
+}

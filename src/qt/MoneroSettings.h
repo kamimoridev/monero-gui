@@ -54,6 +54,7 @@ class MoneroSettings : public QObject, public QQmlParserStatus
     Q_PROPERTY(QString fileName READ fileName WRITE setFileName FINAL)
     Q_PROPERTY(bool portable READ portable NOTIFY portableChanged)
     Q_PROPERTY(QString portableFolderName READ portableFolderName CONSTANT)
+    Q_PROPERTY(bool i2pNodeConnectionEnabled READ i2pNodeConnectionEnabled WRITE setI2pNodeConnectionEnabled NOTIFY i2pNodeConnectionEnabledChanged)
 
 public:
     explicit MoneroSettings(QObject *parent = nullptr);
@@ -67,12 +68,16 @@ public:
     static bool portableConfigExists();
 
     QString settingsDirectory() const;
+    bool i2pNodeConnectionEnabled() const;
+    void setI2pNodeConnectionEnabled(bool enabled);
+
 
 public slots:
     void _q_propertyChanged();
 
 signals:
     void portableChanged() const;
+    void i2pNodeConnectionEnabledChanged();
 
 protected:
     void timerEvent(QTimerEvent *event) override;
