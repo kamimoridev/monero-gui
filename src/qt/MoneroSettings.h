@@ -36,73 +36,72 @@
 #ifndef MONEROSETTINGS_H
 #define MONEROSETTINGS_H
 
+#include <QtQml/qqmlparserstatus.h>
+#include <QObject>
+#include <QVariant>
+#include <QJSValue>
+#include <QHash>
+#include <QMetaProperty>
+#include <QTimerEvent>
+#include <QDir>
+#include <QFileInfo>
 #include <memory>
 
-#include <QtQml/qqmlparserstatus.h>
-#include <QGuiApplication>
-#include <QClipboard>
-#include <QObject>
-#include <QDebug>
-#include <qsettings.h>
-
-static const int settingsWriteDelay = 500; // ms
+class QSettings;
 
 class MoneroSettings : public QObject, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
-    Q_PROPERTY(QString fileName READ fileName WRITE setFileName FINAL)
-    Q_PROPERTY(bool portable READ portable NOTIFY portableChanged)
-    Q_PROPERTY(QString portableFolderName READ portableFolderName CONSTANT)
-    Q_PROPERTY(bool i2pNodeConnectionEnabled READ i2pNodeConnectionEnabled WRITE setI2pNodeConnectionEnabled NOTIFY i2pNodeConnectionEnabledChanged)
+    Q_PROPERTY(bool portable READ portable WRITE setPortable NOTIFY portableChanged)
+    Q_PROPERTY(QString fileName READ fileName WRITE setFileName)
 
 public:
     explicit MoneroSettings(QObject *parent = nullptr);
 
+    bool portable() const;
+    bool setPortable(bool enabled);
+
     QString fileName() const;
     void setFileName(const QString &fileName);
-    Q_INVOKABLE bool setPortable(bool enabled);
-    Q_INVOKABLE void setWritable(bool enabled);
 
+    Q_INVOKABLE bool getI2pNodeConnectionEnabled() const;
+    Q_INVOKABLE void setI2pNodeConnectionEnabled(bool enabled);
+
+    Q_INVOKABLE QString settingsDirectory() const;
     static QString portableFolderName();
-    static bool portableConfigExists();
-
-    QString settingsDirectory() const;
-    bool i2pNodeConnectionEnabled() const;
-    void setI2pNodeConnectionEnabled(bool enabled);
-
-
-public slots:
-    void _q_propertyChanged();
 
 signals:
-    void portableChanged() const;
-    void i2pNodeConnectionEnabledChanged();
+    void portableChanged();
 
 protected:
     void timerEvent(QTimerEvent *event) override;
     void classBegin() override;
     void componentComplete() override;
 
+private slots:
+    void _q_propertyChanged();
+
 private:
-    QVariant readProperty(const QMetaProperty &property) const;
     void init();
-    void reset();
     void load();
     void store();
-
-    bool portable() const;
+    void reset();
+    QVariant readProperty(const QMetaProperty &property) const;
+    bool portableConfigExists();
     static QString portableFilePath();
     std::unique_ptr<QSettings> portableSettings() const;
     std::unique_ptr<QSettings> unportableSettings() const;
     void swap(std::unique_ptr<QSettings> newSettings);
+    void setWritable(bool enabled);
 
     QHash<const char *, QVariant> m_changedProperties;
-    std::unique_ptr<QSettings> m_settings;
-    QString m_fileName = QString("");
+    int m_timerId = 0;
     bool m_initialized = false;
     bool m_writable = true;
-    int m_timerId = 0;
+    std::unique_ptr<QSettings> m_settings;
+    QString m_fileName = QString("");
+    static const int settingsWriteDelay = 1000;
 };
 
 #endif // MONEROSETTINGS_H

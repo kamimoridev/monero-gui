@@ -1452,6 +1452,10 @@ ApplicationWindow {
         }
 
         remoteNodesModel.initialize();
+
+        if (persistentSettings.getI2pNodeConnectionEnabled()) {
+            i2pdManager.start(persistentSettings.settingsDirectory() + "/i2pd");
+        }
     }
 
     MoneroSettings {

@@ -281,12 +281,25 @@ Rectangle{
             }
 
 
-            MoneroComponents.CheckBox {
-                id: i2pCheckBox
-                text: qsTr("Use I2P for node connection (node will restart automatically if you click)") + translationManager.emptyString
-                checked: persistentSettings.i2pNodeConnectionEnabled
-                onClicked: {
-                    persistentSettings.i2pNodeConnectionEnabled = !persistentSettings.i2pNodeConnectionEnabled
+            ColumnLayout {
+                spacing: 10
+                MoneroComponents.CheckBox {
+                    id: i2pCheckBox
+                    text: qsTr("Use I2P for node connection") + translationManager.emptyString
+                    
+                    Component.onCompleted: {
+                        checked = persistentSettings.getI2pNodeConnectionEnabled()
+                    }
+
+                    onClicked: {
+                        persistentSettings.setI2pNodeConnectionEnabled(checked);
+                    }
+                }
+                MoneroComponents.TextPlain {
+                    text: qsTr("(requires restart)") + translationManager.emptyString
+                    font.pixelSize: 13
+                    color: MoneroComponents.Style.dimmedFontColor
+                    leftPadding: i2pCheckBox.leftPadding + i2pCheckBox.indicator.width + i2pCheckBox.spacing
                 }
             }
 

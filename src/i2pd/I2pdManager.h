@@ -3,29 +3,36 @@
 
 #include <QObject>
 #include <QString>
+#include <QThread>
 
-class MoneroSettings;
+class I2pdWorker;
 
 class I2pdManager : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool running READ isRunning NOTIFY runningChanged)
 
 public:
-    explicit I2pdManager(const QString &dataPath, QObject *parent = nullptr);
+    explicit I2pdManager(QObject *parent = nullptr);
     ~I2pdManager();
 
+    bool isRunning() const;
+
 public slots:
-    void start();
+    void start(const QString &dataPath);
     void stop();
 
-private:
-    QString i2pdSettingsDir() const;
-    void extractAssets();
-    void startI2pd();
-    void stopI2pd();
+signals:
+    void runningChanged(bool running);
 
+private:
+    void extractAssets(const QString &dataPath);
+    void init(const QString &dataPath);
+
+    QThread *m_thread;
+    I2pdWorker *m_worker;
     bool m_isStarted;
-    QString m_dataPath;
+    bool m_isInitialized;
 };
 
 #endif // I2PDMANAGER_H

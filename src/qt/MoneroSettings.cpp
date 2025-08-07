@@ -289,15 +289,7 @@ MoneroSettings::MoneroSettings(QObject *parent) :
 {
 }
 
-QString MoneroSettings::settingsDirectory() const {
-    if (m_settings) {
-        return QFileInfo(m_settings->fileName()).absolutePath();
-    } else {
-        return QString();
-    }
-}
-
-bool MoneroSettings::i2pNodeConnectionEnabled() const
+bool MoneroSettings::getI2pNodeConnectionEnabled() const
 {
     if (!m_settings) {
         return false;
@@ -310,8 +302,14 @@ void MoneroSettings::setI2pNodeConnectionEnabled(bool enabled)
     if (!m_settings) {
         return;
     }
-    if (i2pNodeConnectionEnabled() != enabled) {
-        m_settings->setValue("i2pNodeConnectionEnabled", enabled);
-        emit i2pNodeConnectionEnabledChanged();
+    m_settings->setValue("i2pNodeConnectionEnabled", enabled);
+    m_settings->sync();
+}
+
+QString MoneroSettings::settingsDirectory() const {
+    if (m_settings) {
+        return QFileInfo(m_settings->fileName()).absolutePath();
+    } else {
+        return QString();
     }
 }
