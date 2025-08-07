@@ -9,5 +9,11 @@ target_include_directories(quirc PUBLIC quirc/lib)
 
 set(CMAKE_CXX_STANDARD 17)
 set(WITH_BINARY OFF)
-set(WITH_STATIC OFF)
+
+if (STATIC)
+    set(WITH_STATIC ON)
+else()
+    set(WITH_STATIC OFF)
+endif()
+
 add_subdirectory("i2pd/build")
