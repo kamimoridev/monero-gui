@@ -10,9 +10,8 @@
 
 #include "../../external/i2pd/libi2pd/api.h"
 
-I2pdManager::I2pdManager(const QString &dataPath, QObject *parent)
+I2pdManager::I2pdManager(QObject *parent)
     : QObject(parent)
-    , m_dataPath(dataPath)
     , m_isStarted(false)
 {
 }
@@ -22,14 +21,14 @@ I2pdManager::~I2pdManager()
     stop();
 }
 
-void I2pdManager::start()
+void I2pdManager::start(const QString &dataPath)
 {
     if (m_isStarted) {
         return;
     }
     
-    extractAssets();
-    startI2pd();
+    extractAssets(dataPath);
+    startI2pd(dataPath);
     m_isStarted = true;
 }
 
@@ -43,9 +42,9 @@ void I2pdManager::stop()
     m_isStarted = false;
 }
 
-void I2pdManager::extractAssets()
+void I2pdManager::extractAssets(const QString &dataPath)
 {
-    if (QFile::exists(QDir(m_dataPath).filePath("i2pd.conf"))) {
+    if (QFile::exists(QDir(dataPath).filePath("i2pd.conf"))) {
         return;
     }
 
@@ -55,7 +54,7 @@ void I2pdManager::extractAssets()
         QString relativePath = resourcePath;
         relativePath.remove(0, QString(":/i2pd/").length());
         
-        QString targetFilePath = QDir(m_dataPath).filePath(relativePath);
+        QString targetFilePath = QDir(dataPath).filePath(relativePath);
         QFileInfo fileInfo(targetFilePath);
         QDir().mkpath(fileInfo.absolutePath());
 
@@ -63,11 +62,11 @@ void I2pdManager::extractAssets()
     }
 }
 
-void I2pdManager::startI2pd()
+void I2pdManager::startI2pd(const QString &dataPath)
 {
-    QString confPath = QDir(m_dataPath).filePath("i2pd.conf");
+    QString confPath = QDir(dataPath).filePath("i2pd.conf");
 
-    std::string datadir_str = "--datadir=" + m_dataPath.toStdString();
+    std::string datadir_str = "--datadir=" + dataPath.toStdString();
     std::string conf_str = "--conf=" + confPath.toStdString();
 
     std::vector<char*> argv_vec;
