@@ -299,4 +299,30 @@
         <file>wizard/SeedListGrid.qml</file>
         <file>wizard/template.pdf</file>
     </qresource>
+
+    <qresource prefix="/i2pd">
+        <file alias="i2pd.conf">external/i2pd/contrib/i2pd.conf</file>
+        <file alias="subscriptions.txt">external/i2pd/contrib/subscriptions.txt</file>
+        <file alias="tunnels.conf">external/i2pd/contrib/tunnels.conf</file>
+        <file alias="certificates/family/gostcoin.crt">external/i2pd/contrib/certificates/family/gostcoin.crt</file>
+        <file alias="certificates/family/i2p-dev.crt">external/i2pd/contrib/certificates/family/i2p-dev.crt</file>
+        <file alias="certificates/family/i2pd-dev.crt">external/i2pd/contrib/certificates/family/i2pd-dev.crt</file>
+        <file alias="certificates/family/mca2-i2p.crt">external/i2pd/contrib/certificates/family/mca2-i2p.crt</file>
+        <file alias="certificates/family/stormycloud.crt">external/i2pd/contrib/certificates/family/stormycloud.crt</file>
+        <file alias="certificates/family/volatile.crt">external/i2pd/contrib/certificates/family/volatile.crt</file>
+        <file alias="certificates/reseed/acetone_at_mail.i2p.crt">external/i2pd/contrib/certificates/reseed/acetone_at_mail.i2p.crt</file>
+        <file alias="certificates/reseed/admin_at_stormycloud.org.crt">external/i2pd/contrib/certificates/reseed/admin_at_stormycloud.org.crt</file>
+        <file alias="certificates/reseed/arnavbhatt288_at_mail.i2p.crt">external/i2pd/contrib/certificates/reseed/arnavbhatt288_at_mail.i2p.crt</file>
+        <file alias="certificates/reseed/creativecowpat_at_mail.i2p.crt">external/i2pd/contrib/certificates/reseed/creativecowpat_at_mail.i2p.crt</file>
+        <file alias="certificates/reseed/echelon3_at_mail.i2p.crt">external/i2pd/contrib/certificates/reseed/echelon3_at_mail.i2p.crt</file>
+        <file alias="certificates/reseed/hankhill19580_at_gmail.com.crt">external/i2pd/contrib/certificates/reseed/hankhill19580_at_gmail.com.crt</file>
+        <file alias="certificates/reseed/i2p-reseed_at_mk16.de.crt">external/i2pd/contrib/certificates/reseed/i2p-reseed_at_mk16.de.crt</file>
+        <file alias="certificates/reseed/igor_at_novg.net.crt">external/i2pd/contrib/certificates/reseed/igor_at_novg.net.crt</file>
+        <file alias="certificates/reseed/lazygravy_at_mail.i2p.crt">external/i2pd/contrib/certificates/reseed/lazygravy_at_mail.i2p.crt</file>
+        <file alias="certificates/reseed/orignal_at_mail.i2p.crt">external/i2pd/contrib/certificates/reseed/orignal_at_mail.i2p.crt</file>
+        <file alias="certificates/reseed/r4sas-reseed_at_mail.i2p.crt">external/i2pd/contrib/certificates/reseed/r4sas-reseed_at_mail.i2p.crt</file>
+        <file alias="certificates/reseed/rambler_at_mail.i2p.crt">external/i2pd/contrib/certificates/reseed/rambler_at_mail.i2p.crt</file>
+        <file alias="certificates/reseed/reseed_at_diva.exchange.crt">external/i2pd/contrib/certificates/reseed/reseed_at_diva.exchange.crt</file>
+        <file alias="certificates/reseed/unixeno_at_cubicchaos.net.crt">external/i2pd/contrib/certificates/reseed/unixeno_at_cubicchaos.net.crt</file>
+    </qresource>
 </RCC>

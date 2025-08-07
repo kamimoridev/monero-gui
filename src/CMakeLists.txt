@@ -38,6 +38,8 @@ file(GLOB SOURCE_FILES
     "daemon/*.cpp"
     "p2pool/*.h"
     "p2pool/*.cpp"
+    "i2pd/*.cpp"
+    "i2pd/*.h"
     "model/*.h"
     "model/*.cpp"
     "qt/*.h"
@@ -136,7 +138,7 @@ target_link_libraries(monero-wallet-gui
     qrdecoder
     translations
     zxcvbn
-    libi2pd
+    libi2pd z # libi2pd wont link zlib somewhy
 )
 
 if(X11_FOUND)
