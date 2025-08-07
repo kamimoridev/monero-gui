@@ -10,9 +10,9 @@
 
 #include "../../external/i2pd/libi2pd/api.h"
 
-I2pdManager::I2pdManager(MoneroSettings *settings, QObject *parent)
+I2pdManager::I2pdManager(const QString &dataPath, QObject *parent)
     : QObject(parent)
-    , m_settings(settings)
+    , m_dataPath(dataPath)
     , m_isStarted(false)
 {
 }
@@ -43,16 +43,9 @@ void I2pdManager::stop()
     m_isStarted = false;
 }
 
-QString I2pdManager::i2pdSettingsDir() const
-{
-    QFileInfo settingsFile(m_settings->fileName().isEmpty() ? QSettings().fileName() : m_settings->fileName());
-    return QDir(settingsFile.absolutePath()).filePath("i2pd");
-}
-
 void I2pdManager::extractAssets()
 {
-    QString targetDir = i2pdSettingsDir();
-    if (QFile::exists(QDir(targetDir).filePath("i2pd.conf"))) {
+    if (QFile::exists(QDir(m_dataPath).filePath("i2pd.conf"))) {
         return;
     }
 
@@ -62,7 +55,7 @@ void I2pdManager::extractAssets()
         QString relativePath = resourcePath;
         relativePath.remove(0, QString(":/i2pd/").length());
         
-        QString targetFilePath = QDir(targetDir).filePath(relativePath);
+        QString targetFilePath = QDir(m_dataPath).filePath(relativePath);
         QFileInfo fileInfo(targetFilePath);
         QDir().mkpath(fileInfo.absolutePath());
 
@@ -72,10 +65,9 @@ void I2pdManager::extractAssets()
 
 void I2pdManager::startI2pd()
 {
-    QString dataDir = i2pdSettingsDir();
-    QString confPath = QDir(dataDir).filePath("i2pd.conf");
+    QString confPath = QDir(m_dataPath).filePath("i2pd.conf");
 
-    std::string datadir_str = "--datadir=" + dataDir.toStdString();
+    std::string datadir_str = "--datadir=" + m_dataPath.toStdString();
     std::string conf_str = "--conf=" + confPath.toStdString();
 
     std::vector<char*> argv_vec;
@@ -87,7 +79,9 @@ void I2pdManager::startI2pd()
     char** argv = argv_vec.data();
 
     i2p::api::InitI2P(argc, argv, "monero-gui");
-    i2p::api::StartI2P();
+    
+    auto logStream = std::make_shared<std::ostream>(std::cout.rdbuf());
+    i2p::api::StartI2P(logStream);
 }
 
 void I2pdManager::stopI2pd()

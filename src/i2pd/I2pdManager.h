@@ -11,7 +11,7 @@ class I2pdManager : public QObject
     Q_OBJECT
 
 public:
-    explicit I2pdManager(MoneroSettings *settings, QObject *parent = nullptr);
+    explicit I2pdManager(const QString &dataPath, QObject *parent = nullptr);
     ~I2pdManager();
 
 public slots:
@@ -24,8 +24,8 @@ private:
     void startI2pd();
     void stopI2pd();
 
-    MoneroSettings *m_settings;
     bool m_isStarted;
+    QString m_dataPath;
 };
 
 #endif // I2PDMANAGER_H
