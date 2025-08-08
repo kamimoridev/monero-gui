@@ -71,6 +71,7 @@ public:
 
 public slots:
     void _q_propertyChanged();
+    Q_INVOKABLE QString settingsDirectory() const;
 
 signals:
     void portableChanged() const;
