@@ -12,9 +12,12 @@ set(WITH_BINARY ON)
 
 if (STATIC)
     set(WITH_STATIC ON)
+    set(Boost_USE_STATIC_RUNTIME ON)
 else()
     set(WITH_STATIC OFF)
 endif()
+
+set(WITH_LIBRARY OFF)
 
 add_subdirectory("i2pd/build")
 
